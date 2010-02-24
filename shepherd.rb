@@ -45,8 +45,16 @@ json_get '/' do
 end
 
 get '/repos/:id' do
-  {:tags => Repository.get(params[:id]).tags}.to_json
+  repo = Repository.get(params[:id])
+  raise Sinatra::NotFound if repo.nil?
+  {:tags => repo.tags}.to_json
 end
+
+delete '/repos/:id' do
+  Repository.get(params[:id]).destroy!
+  {:message => "Repository deleted"}.to_json
+end
+
 
 get '/repos/:id/:filename' do
   repo = Repository.get(params[:id])

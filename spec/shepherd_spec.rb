@@ -8,7 +8,7 @@ describe "With Shepherd" do
   end
 
   context 'a repository' do
-    before(:all) do
+    before(:each) do
       # TODO: Fix multiple tag support, MongoDB adapter for DataMapper has problems with this?
       @tags = {'tags' => ['esn-tools']}
       @repo = Repository.create(@tags)
@@ -25,6 +25,12 @@ describe "With Shepherd" do
     it "serves packages with matching tags" do
       get "/repos/#{@repo.id}/#{@nginx.filename}"
       last_response.body.should == @contents
+    end
+
+    it "can be deleted" do
+      delete "/repos/#{@repo.id}"
+      last_response.should be_ok
+      Repository.get(@repo.id).should be_nil
     end
 
     it "speaks JSON" do
