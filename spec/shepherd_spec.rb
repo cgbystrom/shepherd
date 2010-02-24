@@ -1,28 +1,30 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
-describe "Shepherd" do
+describe "With Shepherd" do
   include Rack::Test::Methods
 
   def app
     @app ||= Sinatra::Application
   end
 
-  context 'repository' do
+  context 'a repository' do
     before(:all) do
-      @tags = {'tags' => ['esn-tools', 'website-dev']}
+      # TODO: Fix multiple tag support, MongoDB adapter for DataMapper has problems with this?
+      @tags = {'tags' => ['esn-tools']}
       @repo = Repository.create(@tags)
-      @nginx = Package.create(:filename => 'nginx-0.8.33-3.el5.x86_64.rpm', :tags => ['esn-tools'])
+      @filename = 'nginx-0.8.33-3.el5.x86_64.rpm'
+      @contents = "PLACEHOLDER-DATA"
+      @nginx = Package.create(:filename => @filename, :data => Base64.encode64(@contents), :tags => ['esn-tools'])
     end
-    
+
     it "provides meta data about itself" do
-      # TODO: Check content type
       get "/repos/#{@repo.id}"
       JSON.parse(last_response.body).should == @tags
     end
 
     it "serves packages with matching tags" do
-      get "/#{@repo.id}/#{@nginx.filename}"
-      last_response.should be_ok
+      get "/repos/#{@repo.id}/#{@nginx.filename}"
+      last_response.body.should == @contents
     end
   end
 end

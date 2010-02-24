@@ -4,8 +4,11 @@ require 'mongo'
 require 'json' 
 require 'dm-core'
 require 'mongo_adapter'
+require 'base64'
+require 'time'
 
-DataMapper.setup(:default, :adapter => 'mongo', :database => 'shepherd')
+DataMapper.setup(:default, :adapter => 'mongo', :database => "shepherd#{rand(1002000)}")
+
 
 class Repository
   include DataMapper::Mongo::Resource
@@ -18,8 +21,8 @@ class Package
   include DataMapper::Mongo::Resource
 
   property :id, ObjectID
-  property :filename, String
-  property :creation_date, Date
+  property :filename, String, :required => true
+  property :data, String, :required => true
   property :tags, Array
 end
 
@@ -32,12 +35,24 @@ def json_get(route, options={}, &block)
     block.call.to_json
   end
 end
- 
+
+before do
+  content_type 'application/json'
+end
+
 json_get '/' do
   'Hello'
 end
 
 get '/repos/:id' do
-  id = params[:id]
-  {:tags => Repository.get(id).tags}.to_json
+  {:tags => Repository.get(params[:id]).tags}.to_json
+end
+
+get '/repos/:id/:filename' do
+  repo = Repository.get(params[:id])
+  raise NotFound if repo.nil?
+
+  p = Package.first(:tags => repo.tags, :filename => params[:filename])
+  raise NotFound if p.nil?
+  Base64.decode64 p.data
 end
