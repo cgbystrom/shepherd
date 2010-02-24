@@ -26,5 +26,10 @@ describe "With Shepherd" do
       get "/repos/#{@repo.id}/#{@nginx.filename}"
       last_response.body.should == @contents
     end
+
+    it "speaks JSON" do
+      get "/repos/#{@repo.id}"
+      last_response.content_type.should == "application/json"
+    end
   end
 end
