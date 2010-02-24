@@ -26,7 +26,7 @@ It's simple Ruby project built with Sinatra. gem install required gems and start
 
 ## Authors
 
-- Carl Bystršm <http://www.pedantique.org/>
+- Carl Bystr&ouml;m <http://www.pedantique.org/>
 
 ## License
 
