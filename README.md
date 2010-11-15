@@ -22,7 +22,8 @@ Quite a turndown in times when all cool kids do cloud deployment.
 
 ## Getting started
 
-It's simple Ruby project built with Sinatra. gem install required gems and start shepherd.rb
+It's simple Python project based on Flask microframework. Uses MongoDB for storing all metadata and the packages themselves. Still work in progress, there's nothing working yet.
+Put it up for a friend in need of something similar.
 
 ## Authors
 
