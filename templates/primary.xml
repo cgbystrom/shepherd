@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://linux.duke.edu/metadata/common" xmlns:rpm="http://linux.duke.edu/metadata/rpm" packages="{{packages|length}}">
+    {% for p in packages %}
+    <package type="rpm">
+        <name>{{p.name}}</name>
+        <arch>{{p.arch}}</arch>
+        <version epoch="{{p.epoch}}" ver="{{p.version}}" rel="{{p.release}}"/>
+        <checksum type="FIX" pkgid="FIX">FIX</checksum>
+        <summary>{{p.summary}}</summary>
+        <description>{{p.description}}</description>
+        <packager>{{p.packager}}</packager>
+        <url>{{p.url}}</url>
+        <time file="{{p.time.file}}" build="{{p.time.build}}"/>
+        <size package="31925" installed="62722" archive="63116"/>
+        <location href="RPMS/GFS-devel-6.0.2.36-2.i386.rpm"/>
+        <format>
+            <rpm:license>GPL</rpm:license>
+            <rpm:vendor>CentOS</rpm:vendor>
+            <rpm:group>System Environment/Base</rpm:group>
+            <rpm:buildhost>tyler.byteclub.net</rpm:buildhost>
+            <rpm:sourcerpm>GFS-6.0.2.36-2.src.rpm</rpm:sourcerpm>
+            <rpm:header-range start="440" end="10991"/>
+            <rpm:provides>
+                <rpm:entry name="GFS-devel" flags="EQ" epoch="0" ver="6.0.2.36" rel="2"/>
+            </rpm:provides>
+            <rpm:requires>
+                <rpm:entry name="rpmlib(PayloadFilesHavePrefix)" flags="LE" epoch="0" ver="4.0" rel="1" pre="1"/>
+                <rpm:entry name="rpmlib(CompressedFileNames)" flags="LE" epoch="0" ver="3.0.4" rel="1" pre="1"/>
+            </rpm:requires>
+        </format>
+    </package>
+    {% endfor %}
+</metadata>

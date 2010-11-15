@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<repomd xmlns="http://linux.duke.edu/metadata/repo"> 
+{% for file in files %}
+    <data type="{{file.type}}">
+        <location href="{{file.href}}"/>
+        <checksum type="{{file.checksum_type}}">{{file.checksum}}</checksum>
+        <timestamp>{{file.timestamp}}</timestamp>
+        <open-checksum type="{{file.open_checksum_type}}">{{file.open_checksum}}</open-checksum>
+    </data>
+{% endfor %}
+</repomd> 
+
